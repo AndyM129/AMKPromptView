@@ -8,13 +8,17 @@
 
 #import "AMKViewController.h"
 #import "AMKPlaceholderView+Factory.h"
+#import "AMKPromptView+Factory.h"
 
 typedef NS_ENUM(NSInteger, AMKPromptType) {
     AMKPromptTypeEmptyViewForNoColorsLoaded = 0,        //!< 显示占位视图到 self.view 上
     AMKPromptTypeEmptyViewForNoColorsLoadedInWindow,    //!< 显示占位视图到 Window 上
     AMKPromptTypeLoadingViewWithActivityIndicator,      //!<
     AMKPromptTypeLoadingViewWithGif,                    //!<
-    AMKPromptTypeCount, //!< 计数
+    AMKPromptTypeCountInSectionOne,                     //!< 计数
+    AMKPromptTypeDemo,                                  //!<
+    AMKPromptType500PX,                                 //!<
+    AMKPromptTypeCountInSectionTwo,                     //!< 计数
 };
 
 @interface AMKViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -57,7 +61,7 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [UIView new];
@@ -89,17 +93,26 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
 
 #pragma mark UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return AMKPromptTypeCount;
+    if (section==0) return AMKPromptTypeCountInSectionOne;
+    if (section==1) return AMKPromptTypeCountInSectionTwo - AMKPromptTypeCountInSectionOne - 1;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(UITableViewCell.class)];
-    switch (indexPath.row) {
+    AMKPromptType promptType = indexPath.section==0 ? indexPath.row : (indexPath.row+AMKPromptTypeCountInSectionOne+1);
+    switch (promptType) {
         case AMKPromptTypeEmptyViewForNoColorsLoaded: cell.textLabel.text = @"显示“空数据”提示到 self.view 上"; break;
         case AMKPromptTypeEmptyViewForNoColorsLoadedInWindow: cell.textLabel.text = @"显示“空数据”提示到 Window 上"; break;
         case AMKPromptTypeLoadingViewWithActivityIndicator: cell.textLabel.text = @"显示“加载中”提示"; break;
         case AMKPromptTypeLoadingViewWithGif: cell.textLabel.text = @"显示“加载中”提示: Gif"; break;
+        case AMKPromptTypeDemo: cell.textLabel.text = @"完整示例"; break;
+        case AMKPromptType500PX: cell.textLabel.text = @"显示“500PX”的提示视图：loading->empty->hidden"; break;
         default: cell.textLabel.text = nil; break;
     }
     return cell;
@@ -109,7 +122,8 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row) {
+    AMKPromptType promptType = indexPath.section==0 ? indexPath.row : (indexPath.row+AMKPromptTypeCountInSectionOne+1);
+    switch (promptType) {
         case AMKPromptTypeEmptyViewForNoColorsLoaded: {
             [AMKPlaceholderView.emptyViewForNoColorsLoaded show:YES inView:self.view animated:YES];
             break;
@@ -119,11 +133,29 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
             break;
         }
         case AMKPromptTypeLoadingViewWithActivityIndicator: {
-            [AMKPlaceholderView.loadingViewWithActivityIndicator show:YES inView:nil animated:YES];
+            [AMKPlaceholderView.loadingViewWithActivityIndicator show:YES inView:self.view animated:YES];
             break;
         }
         case AMKPromptTypeLoadingViewWithGif: {
-            [AMKPlaceholderView.loadingViewWithGif show:YES inView:nil animated:YES];
+            [AMKPlaceholderView.loadingViewWithGif show:YES inView:self.view animated:YES];
+            break;
+        }
+        case AMKPromptTypeDemo: {
+            AMKPromptView *promptView = AMKPromptView.promptViewForDemo;
+            [self.view addSubview:promptView];
+            [promptView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(UIEdgeInsetsZero);
+            }];
+            [promptView setStatus:promptView.nextStatus animated:YES completion:nil];
+            break;
+        }
+        case AMKPromptType500PX: {
+            AMKPromptView *promptView = AMKPromptView.promptViewFor500PX;
+            [self.view addSubview:promptView];
+            [promptView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(UIEdgeInsetsZero);
+            }];
+            [promptView setStatus:AMKPromptStatusLoading animated:YES completion:nil];
             break;
         }
         default: break;

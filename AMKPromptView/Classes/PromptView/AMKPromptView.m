@@ -21,18 +21,11 @@
     
 }
 
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [AMKPromptView appearance].animationDuration = 0.15;
-    });
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.hidden = YES;
         self.backgroundColor = [UIColor whiteColor];
-        self.animationDuration = [AMKPromptView appearance].animationDuration;
+        self.animationDuration = [AMKPromptView appearance].animationDuration>0 ? [AMKPromptView appearance].animationDuration : 0.15;
     }
     return self;
 }
@@ -124,6 +117,23 @@
 - (void)setStatus:(AMKPromptStatus)status {
     [self setStatus:status animated:NO completion:nil];
 }
+
+#ifdef DEBUG
+
+- (AMKPromptStatus)nextStatus {
+    AMKPromptStatus nextStatus = self.status;
+    do {
+        nextStatus = (nextStatus+1) % (AMKPromptStatusEmpty+1);
+        if (nextStatus==AMKPromptStatusHidden) break;
+        if (nextStatus==AMKPromptStatusRestricted && _restrictedView) break;
+        if (nextStatus==AMKPromptStatusLoading && _loadingView) break;
+        if (nextStatus==AMKPromptStatusError && _errorView) break;
+        if (nextStatus==AMKPromptStatusEmpty && _emptyView) break;
+    } while (YES);
+    return nextStatus;
+}
+
+#endif
 
 #pragma mark - Actions
 

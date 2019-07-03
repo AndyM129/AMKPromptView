@@ -25,7 +25,7 @@ static BOOL kDebugEnable = NO;
     
 }
 
-/// 配置默认样式
+/// 默认配置
 + (void)initialize {
     if (self != AMKPlaceholderView.class) return;
     

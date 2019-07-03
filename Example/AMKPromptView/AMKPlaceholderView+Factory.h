@@ -12,6 +12,8 @@
 
 /// 占位视图：工厂类
 @interface AMKPlaceholderView (Factory)
++ (instancetype)restrictedView; //!< 权限提示
++ (instancetype)errorView; //!< 错误提示
 + (instancetype)emptyViewForNoColorsLoaded; //!< 空数据提示
 + (instancetype)loadingViewWithActivityIndicator; //!< 加载中提示
 + (instancetype)loadingViewWithGif; //!< 加载中提示

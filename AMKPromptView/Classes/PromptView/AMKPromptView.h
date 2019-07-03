@@ -34,5 +34,13 @@ typedef void(^AMKPromptViewCompletionBlock)(AMKPromptView *promptView, BOOL fini
 - (void)setStatus:(AMKPromptStatus)status animated:(BOOL)animated completion:(AMKPromptViewCompletionBlock)completion;    //!< 修改提示状态
 @end
 
+#ifdef DEBUG
+
+/// 调试
+@interface AMKPromptView (Debug)
+@property(nonatomic, readonly) AMKPromptStatus nextStatus;       /// 下一个有效的提示状态
+@end
+
+#endif
 
 

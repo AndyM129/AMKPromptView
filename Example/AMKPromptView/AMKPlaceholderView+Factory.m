@@ -12,6 +12,58 @@
 
 #pragma mark - Init Methods
 
++ (instancetype)restrictedView {
+    // 底部按钮
+    UIColor *normalBackgroundColor = [UIColor colorWithRed:4/255.0 green:125/255.0 blue:254/255.0 alpha:1/1.0];
+    UIImage *normalBackgroundImage = [UIImage amkpv_imageWithColor:normalBackgroundColor size:CGSizeMake(150, 38) cornerRadius:4];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, normalBackgroundImage.size.width, normalBackgroundImage.size.height);
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [button setTitle:@"Login" forState:UIControlStateNormal];
+    [button setBackgroundImage:normalBackgroundImage forState:UIControlStateNormal];
+    
+    // 占位视图
+    AMKPlaceholderView *placeholderView = [AMKPlaceholderView new];
+    placeholderView.titleLabel.text = @"You have no right, please login.";
+    placeholderView.button = button;
+    
+    // 绑定事件
+    __weak AMKPlaceholderView *weakPlaceholderView = placeholderView;
+    [placeholderView.button addBlockForControlEvents:UIControlEventTouchUpInside block:^(id  _Nonnull sender) {
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    [placeholderView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    return placeholderView;
+}
+
++ (instancetype)errorView {
+    // 底部按钮
+    UIColor *normalBackgroundColor = [UIColor colorWithRed:4/255.0 green:125/255.0 blue:254/255.0 alpha:1/1.0];
+    UIImage *normalBackgroundImage = [UIImage amkpv_imageWithColor:normalBackgroundColor size:CGSizeMake(150, 38) cornerRadius:4];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, normalBackgroundImage.size.width, normalBackgroundImage.size.height);
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [button setTitle:@"Reload" forState:UIControlStateNormal];
+    [button setBackgroundImage:normalBackgroundImage forState:UIControlStateNormal];
+    
+    // 占位视图
+    AMKPlaceholderView *placeholderView = [AMKPlaceholderView new];
+    placeholderView.titleLabel.text = @"Sorry, there has something wrong.";
+    placeholderView.button = button;
+    
+    // 绑定事件
+    __weak AMKPlaceholderView *weakPlaceholderView = placeholderView;
+    [placeholderView.button addBlockForControlEvents:UIControlEventTouchUpInside block:^(id  _Nonnull sender) {
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    [placeholderView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    return placeholderView;
+}
+
 + (instancetype)emptyViewForNoColorsLoaded {
     // 提示视图
     UIImage *indicatorImage = [UIImage imageNamed:@"amk_placeholder_empty_colors"];
