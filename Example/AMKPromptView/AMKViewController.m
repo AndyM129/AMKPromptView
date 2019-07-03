@@ -10,8 +10,10 @@
 #import "AMKPlaceholderView+Factory.h"
 
 typedef NS_ENUM(NSInteger, AMKPromptType) {
-    AMKPromptTypePlaceholderViewForDemo = 0,        //!< 显示占位视图到 self.view 上
-    AMKPromptTypePlaceholderViewForDemoInWindow,    //!< 显示占位视图到 Window 上
+    AMKPromptTypeEmptyViewForNoColorsLoaded = 0,        //!< 显示占位视图到 self.view 上
+    AMKPromptTypeEmptyViewForNoColorsLoadedInWindow,    //!< 显示占位视图到 Window 上
+    AMKPromptTypeLoadingViewWithActivityIndicator,      //!<
+    AMKPromptTypeLoadingViewWithGif,                    //!<
     AMKPromptTypeCount, //!< 计数
 };
 
@@ -94,8 +96,10 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(UITableViewCell.class)];
     switch (indexPath.row) {
-        case AMKPromptTypePlaceholderViewForDemo: cell.textLabel.text = @"显示占位视图到 self.view 上"; break;
-        case AMKPromptTypePlaceholderViewForDemoInWindow: cell.textLabel.text = @"显示占位视图到 Window 上"; break;
+        case AMKPromptTypeEmptyViewForNoColorsLoaded: cell.textLabel.text = @"显示“空数据”提示到 self.view 上"; break;
+        case AMKPromptTypeEmptyViewForNoColorsLoadedInWindow: cell.textLabel.text = @"显示“空数据”提示到 Window 上"; break;
+        case AMKPromptTypeLoadingViewWithActivityIndicator: cell.textLabel.text = @"显示“加载中”提示"; break;
+        case AMKPromptTypeLoadingViewWithGif: cell.textLabel.text = @"显示“加载中”提示: Gif"; break;
         default: cell.textLabel.text = nil; break;
     }
     return cell;
@@ -106,12 +110,20 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
-        case AMKPromptTypePlaceholderViewForDemo: {
-            [AMKPlaceholderView.placeholderViewForDemo show:YES inView:self.view animated:YES];
+        case AMKPromptTypeEmptyViewForNoColorsLoaded: {
+            [AMKPlaceholderView.emptyViewForNoColorsLoaded show:YES inView:self.view animated:YES];
             break;
         }
-        case AMKPromptTypePlaceholderViewForDemoInWindow: {
-            [AMKPlaceholderView.placeholderViewForDemo show:YES inView:nil animated:YES];
+        case AMKPromptTypeEmptyViewForNoColorsLoadedInWindow: {
+            [AMKPlaceholderView.emptyViewForNoColorsLoaded show:YES inView:nil animated:YES];
+            break;
+        }
+        case AMKPromptTypeLoadingViewWithActivityIndicator: {
+            [AMKPlaceholderView.loadingViewWithActivityIndicator show:YES inView:nil animated:YES];
+            break;
+        }
+        case AMKPromptTypeLoadingViewWithGif: {
+            [AMKPlaceholderView.loadingViewWithGif show:YES inView:nil animated:YES];
             break;
         }
         default: break;

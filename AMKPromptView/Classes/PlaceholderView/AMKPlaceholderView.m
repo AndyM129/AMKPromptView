@@ -332,7 +332,7 @@ static BOOL kDebugEnable = NO;
 @end
 
 @implementation UIImageView(AMKPlaceholderView) @end
-
+@implementation UIActivityIndicatorView(AMKPlaceholderView) @end
 @implementation UIImage (AMKPlaceholderView)
 
 + (UIImage *_Nullable)amkpv_imageWithColor:(UIColor *_Nullable)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius {

@@ -53,6 +53,11 @@
 
 #pragma mark -
 
+/// UIActivityIndicatorView 默认支持 AMKPlaceholderIndicatorAnimationProtocol协议
+@interface UIActivityIndicatorView (AMKPlaceholderView) <AMKPlaceholderIndicatorAnimationProtocol> @end
+
+#pragma mark -
+
 @interface UIImage (AMKPlaceholderView)
 
 /// 以指定颜色、大小、圆角 生成图片

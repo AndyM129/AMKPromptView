@@ -12,7 +12,9 @@
 
 /// 占位视图：工厂类
 @interface AMKPlaceholderView (Factory)
-+ (instancetype)placeholderViewForDemo; //!< 演示
++ (instancetype)emptyViewForNoColorsLoaded; //!< 空数据提示
++ (instancetype)loadingViewWithActivityIndicator; //!< 加载中提示
++ (instancetype)loadingViewWithGif; //!< 加载中提示
 
 #pragma mark -
 

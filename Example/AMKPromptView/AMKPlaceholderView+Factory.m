@@ -12,9 +12,9 @@
 
 #pragma mark - Init Methods
 
-+ (instancetype)placeholderViewForDemo {
++ (instancetype)emptyViewForNoColorsLoaded {
     // 提示视图
-    UIImage *indicatorImage = [UIImage imageNamed:@"amk_colors_placeholder_empty"];
+    UIImage *indicatorImage = [UIImage imageNamed:@"amk_placeholder_empty_colors"];
     UIImageView *indicatorView = [[UIImageView alloc] initWithImage:indicatorImage];
     indicatorView.frame = CGRectMake(0, 0, indicatorImage.size.width, indicatorImage.size.height);
     
@@ -47,6 +47,45 @@
     return placeholderView;
 }
 
++ (instancetype)loadingViewWithActivityIndicator {
+    // 提示视图
+    UIActivityIndicatorView *indicatorView = [UIActivityIndicatorView.alloc initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    // 占位视图
+    AMKPlaceholderView *placeholderView = [AMKPlaceholderView new];
+    placeholderView.indicatorView = indicatorView;
+    placeholderView.titleLabel.text = @"Loading ...";
+    
+    // 绑定事件
+    __weak AMKPlaceholderView *weakPlaceholderView = placeholderView;
+    [placeholderView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
+        NSLog(@"");
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    return placeholderView;
+}
+
++ (instancetype)loadingViewWithGif {
+    // 提示视图
+    UIImageView *indicatorView = [[UIImageView alloc] init];
+    indicatorView.animationImages = [UIImage amkpv_imagesWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"amk_placeholder_loading" ofType:@"gif"]];
+    indicatorView.animationDuration = indicatorView.animationImages.count / 10.0;
+    indicatorView.frame = CGRectMake(0, 0, indicatorView.animationImages.firstObject.size.width, indicatorView.animationImages.firstObject.size.height);
+    
+    // 占位视图
+    AMKPlaceholderView *placeholderView = [AMKPlaceholderView new];
+    placeholderView.indicatorView = indicatorView;
+    placeholderView.titleLabel.text = @"Loading ...";
+    
+    // 绑定事件
+    __weak AMKPlaceholderView *weakPlaceholderView = placeholderView;
+    [placeholderView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
+        NSLog(@"");
+        [weakPlaceholderView show:NO inView:nil animated:YES];
+    }];
+    return placeholderView;
+}
+
 #pragma mark - Properties
 
 #pragma mark - Layout Subviews
@@ -64,13 +103,22 @@
         if (self.superview != superview) {
             [self removeFromSuperview];
             [superview addSubview:self];
+            
+            if ([self.indicatorView conformsToProtocol:@protocol(AMKPlaceholderIndicatorAnimationProtocol)]) {
+                [self.indicatorView performSelector:@selector(startAnimating)];
+            }
         }
     }
     [UIView animateWithDuration:0.1 animations:^{
         self.alpha = willShow ? 1 : 0;
     } completion:^(BOOL finished) {
         self.alpha = willShow ? 1 : 0;
-        if (!willShow) [self removeFromSuperview];
+        if (!willShow) {
+            [self removeFromSuperview];
+            if ([self.indicatorView conformsToProtocol:@protocol(AMKPlaceholderIndicatorAnimationProtocol)]) {
+                [self.indicatorView performSelector:@selector(stopAnimating)];
+            }
+        }
     }];
 }
 
