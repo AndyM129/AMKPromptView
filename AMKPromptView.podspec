@@ -9,34 +9,25 @@
 Pod::Spec.new do |s|
   s.name             = 'AMKPromptView'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of AMKPromptView.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
+  s.summary          = 'AMKPromptView'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+                       The dispatcher with no regist process to split your iOS Project into multiple project.
                        DESC
-
   s.homepage         = 'https://github.com/AndyM129/AMKPromptView'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'AndyM129' => 'andy_m129@163.com' }
+  s.author           = { 'Andy__M' => 'andy_m129@163.com' }
   s.source           = { :git => 'https://github.com/AndyM129/AMKPromptView.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
   s.ios.deployment_target = '8.0'
+  s.default_subspec = 'AMKPromptView'
 
-  s.source_files = 'AMKPromptView/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'AMKPromptView' => ['AMKPromptView/Assets/*.png']
-  # }
+  s.subspec 'AMKPromptView' do |promptView|
+      promptView.source_files = 'AMKPromptView/Classes/PromptView/*.{h,m}'
+      promptView.dependency 'AMKPromptView/AMKPlaceholderView'
+  end
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.subspec 'AMKPlaceholderView' do |placeholderView|
+      placeholderView.source_files = 'AMKPromptView/Classes/PlaceholderView/*.{h,m}'
+      placeholderView.dependency 'Masonry'
+  end
+
 end

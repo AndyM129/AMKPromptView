@@ -6,7 +6,7 @@
 //  Copyright (c) 2019 https://github.com/AndyM129 . All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface AMKViewController : UIViewController
 
