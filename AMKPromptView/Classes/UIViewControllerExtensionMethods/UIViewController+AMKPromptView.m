@@ -17,7 +17,6 @@
 
 - (AMKPromptView *)amk_promptView {
     AMKPromptView *_promptView = objc_getAssociatedObject(self, @selector(amk_promptView));
-    
     if (!_promptView) {
         _promptView = [[AMKPromptView alloc] init];
         _promptView.delegate = self;

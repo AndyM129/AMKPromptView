@@ -511,6 +511,11 @@
 				DEVELOPMENT_TEAM = 9X349G8KD4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMKPromptView/AMKPromptView-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"AMKPV_SHORTHAND_GLOBALS=1",
+				);
 				INFOPLIST_FILE = "AMKPromptView/AMKPromptView-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;
@@ -529,6 +534,11 @@
 				DEVELOPMENT_TEAM = 9X349G8KD4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AMKPromptView/AMKPromptView-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"AMKPV_SHORTHAND_GLOBALS=1",
+				);
 				INFOPLIST_FILE = "AMKPromptView/AMKPromptView-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;

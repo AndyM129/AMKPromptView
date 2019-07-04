@@ -7,3 +7,13 @@ target 'AMKPromptView_Example' do
   pod 'YYCategories'
   pod 'YPNavigationBarTransition'
 end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'AMKPromptView'
+      target.build_configurations.each do |config|
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = '$(inherited) COCOAPODS=1 AMKPV_SHORTHAND_GLOBALS=1'
+      end
+    end
+  end
+end
