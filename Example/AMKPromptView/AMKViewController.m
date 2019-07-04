@@ -8,6 +8,7 @@
 
 #import "AMKViewController.h"
 #import "AMKDemoViewController.h"
+#import "AMKCustomViewController.h"
 
 @interface AMKViewController () <UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic, strong, nullable) UITableView *tableView;
@@ -93,13 +94,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(UITableViewCell.class)];
-    AMKPromptType promptType = indexPath.section==0 ? indexPath.row : (indexPath.row+AMKPromptTypeCountInSectionOne+1);
+    AMKPromptType promptType = [self promptTypeAtIndexPath:indexPath];
     switch (promptType) {
         case AMKPromptTypeEmptyViewForNoColorsLoaded: cell.textLabel.text = @"显示“空数据”提示到 self.view 上"; break;
         case AMKPromptTypeEmptyViewForNoColorsLoadedInWindow: cell.textLabel.text = @"显示“空数据”提示到 Window 上"; break;
         case AMKPromptTypeLoadingViewWithActivityIndicator: cell.textLabel.text = @"显示“加载中”提示"; break;
         case AMKPromptTypeLoadingViewWithGif: cell.textLabel.text = @"显示“加载中”提示: Gif"; break;
         case AMKPromptTypeDemo: cell.textLabel.text = @"完整示例"; break;
+        case AMKPromptTypeDemoViewController: cell.textLabel.text = @"完整示例页面"; break;
         case AMKPromptType500PX: cell.textLabel.text = @"显示“500PX”的提示视图：loading->empty->hidden"; break;
         default: cell.textLabel.text = nil; break;
     }
@@ -111,7 +113,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AMKPromptType promptType = indexPath.section==0 ? indexPath.row : (indexPath.row+AMKPromptTypeCountInSectionOne+1);
+    AMKPromptType promptType = [self promptTypeAtIndexPath:indexPath];
     switch (promptType) {
         case AMKPromptTypeEmptyViewForNoColorsLoaded: {
             [AMKPlaceholderView.emptyViewForNoColorsLoaded show:YES inView:self.view animated:YES];
@@ -138,8 +140,13 @@
             [promptView setStatus:promptView.nextStatus animated:YES completion:nil];
             break;
         }
-        default: {
+        case AMKPromptTypeDemoViewController: {
             AMKDemoViewController *viewController = [AMKDemoViewController.alloc init];
+            [self.navigationController pushViewController:viewController animated:YES];
+            break;
+        }
+        default: {
+            AMKCustomViewController *viewController = [AMKCustomViewController.alloc initWithPromptType:promptType];
             [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
@@ -149,5 +156,10 @@
 #pragma mark - Override
 
 #pragma mark - Helper Methods
+
+- (AMKPromptType)promptTypeAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) return AMKPromptTypeCountInSectionOne + 1 + indexPath.row;
+    return indexPath.row;
+}
 
 @end

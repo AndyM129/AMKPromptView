@@ -27,6 +27,7 @@
 		88E25F8022CCD86400D591BC /* amk_placeholder_loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88E25F7F22CCD86400D591BC /* amk_placeholder_loading.gif */; };
 		88E25F8322CCDE9500D591BC /* AMKPromptView+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E25F8222CCDE9500D591BC /* AMKPromptView+Factory.m */; };
 		88E25F8622CDA0E600D591BC /* AMKDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E25F8522CDA0E600D591BC /* AMKDemoViewController.m */; };
+		88E25F9222CDF05800D591BC /* AMKCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E25F9022CDF05700D591BC /* AMKCustomViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		88E25F8222CCDE9500D591BC /* AMKPromptView+Factory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AMKPromptView+Factory.m"; sourceTree = "<group>"; };
 		88E25F8422CDA0E600D591BC /* AMKDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMKDemoViewController.h; sourceTree = "<group>"; };
 		88E25F8522CDA0E600D591BC /* AMKDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMKDemoViewController.m; sourceTree = "<group>"; };
+		88E25F9022CDF05700D591BC /* AMKCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKCustomViewController.m; sourceTree = "<group>"; };
+		88E25F9122CDF05800D591BC /* AMKCustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKCustomViewController.h; sourceTree = "<group>"; };
 		90965A128771957AD9DD6446 /* Pods-AMKPromptView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AMKPromptView_Example.debug.xcconfig"; path = "Target Support Files/Pods-AMKPromptView_Example/Pods-AMKPromptView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		968C3A28AB8AA50D52A8570E /* AMKPromptView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AMKPromptView.podspec; path = ../AMKPromptView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		ACC7193856E5BF4B4EBA00DF /* Pods_AMKPromptView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AMKPromptView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +146,8 @@
 				6003F5A6195388D20070C39A /* AMKViewController.m */,
 				88E25F8422CDA0E600D591BC /* AMKDemoViewController.h */,
 				88E25F8522CDA0E600D591BC /* AMKDemoViewController.m */,
+				88E25F9122CDF05800D591BC /* AMKCustomViewController.h */,
+				88E25F9022CDF05700D591BC /* AMKCustomViewController.m */,
 				88E25F7822CCC74200D591BC /* AMKPlaceholderView+Factory.h */,
 				88E25F7922CCC74200D591BC /* AMKPlaceholderView+Factory.m */,
 				88E25F8122CCDE9500D591BC /* AMKPromptView+Factory.h */,
@@ -371,6 +376,7 @@
 			files = (
 				6003F59E195388D20070C39A /* AMKAppDelegate.m in Sources */,
 				88E25F8622CDA0E600D591BC /* AMKDemoViewController.m in Sources */,
+				88E25F9222CDF05800D591BC /* AMKCustomViewController.m in Sources */,
 				88E25F7A22CCC74200D591BC /* AMKPlaceholderView+Factory.m in Sources */,
 				88E25F8322CCDE9500D591BC /* AMKPromptView+Factory.m in Sources */,
 				6003F5A7195388D20070C39A /* AMKViewController.m in Sources */,

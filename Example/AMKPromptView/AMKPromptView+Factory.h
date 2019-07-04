@@ -16,13 +16,12 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
     AMKPromptTypeLoadingViewWithGif,                    //!<
     AMKPromptTypeCountInSectionOne,                     //!< 计数
     AMKPromptTypeDemo,                                  //!<
-    AMKPromptType500PX,                                 //!<
+    AMKPromptTypeDemoViewController,                    //!<
     AMKPromptTypeCountInSectionTwo,                     //!< 计数
+    AMKPromptType500PX,                                 //!<
 };
 
 /// 提示视图：工厂类
 @interface AMKPromptView (Factory)
 + (instancetype)promptViewForDemo;
-+ (instancetype)promptViewFor500PX;
-
 @end

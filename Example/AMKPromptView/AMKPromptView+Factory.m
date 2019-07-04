@@ -58,34 +58,6 @@
     return promptView;
 }
 
-+ (instancetype)promptViewFor500PX {
-    AMKPromptView *promptView = [AMKPromptView new];
-    promptView.loadingView = [AMKPlaceholderView loadingViewWithGif];
-    promptView.emptyView = [AMKPlaceholderView emptyViewForNoColorsLoaded];
-
-    // 清除之前绑定的事件
-    [promptView.loadingView.button removeAllTargets];
-    [promptView.loadingView.tapGestureRecognizer removeAllActionBlocks];
-    [promptView.emptyView.button removeAllTargets];
-    [promptView.emptyView.tapGestureRecognizer removeAllActionBlocks];
-
-    // 绑定新的事件
-    __weak AMKPromptView *weakPromptView = promptView;
-    [promptView.loadingView.button addBlockForControlEvents:UIControlEventTouchUpInside block:^(id  _Nonnull sender) {
-        [weakPromptView setStatus:weakPromptView.nextStatus animated:YES completion:nil];
-    }];
-    [promptView.loadingView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
-        [weakPromptView setStatus:weakPromptView.nextStatus animated:YES completion:nil];
-    }];
-    [promptView.emptyView.button setBlockForControlEvents:UIControlEventTouchUpInside block:^(id  _Nonnull sender) {
-        [weakPromptView setStatus:weakPromptView.nextStatus animated:YES completion:nil];
-    }];
-    [promptView.emptyView.tapGestureRecognizer addActionBlock:^(id  _Nonnull sender) {
-        [weakPromptView setStatus:weakPromptView.nextStatus animated:YES completion:nil];
-    }];
-    return promptView;
-}
-
 #pragma mark - Properties
 
 #pragma mark - Layout Subviews

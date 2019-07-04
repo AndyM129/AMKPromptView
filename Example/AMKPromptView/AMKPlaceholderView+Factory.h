@@ -18,6 +18,9 @@
 + (instancetype)loadingViewWithActivityIndicator; //!< 加载中提示
 + (instancetype)loadingViewWithGif; //!< 加载中提示
 
++ (instancetype)emptyViewFor500PX;
++ (instancetype)loadingViewFor500PX;
+
 #pragma mark -
 
 - (void)show:(BOOL)willShow inView:(UIView *)superview animated:(BOOL)animated;

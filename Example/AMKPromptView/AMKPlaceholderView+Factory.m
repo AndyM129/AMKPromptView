@@ -138,6 +138,14 @@
     return placeholderView;
 }
 
++ (instancetype)loadingViewFor500PX {
+    return nil;
+}
+
++ (instancetype)emptyViewFor500PX {
+    return nil;
+}
+
 #pragma mark - Properties
 
 #pragma mark - Layout Subviews
