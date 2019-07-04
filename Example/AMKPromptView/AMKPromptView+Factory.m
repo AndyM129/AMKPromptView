@@ -7,7 +7,6 @@
 //
 
 #import "AMKPromptView+Factory.h"
-#import "AMKPlaceholderView+Factory.h"
 
 @implementation AMKPromptView (Factory)
 

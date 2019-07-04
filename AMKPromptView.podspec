@@ -18,15 +18,20 @@ Pod::Spec.new do |s|
   s.author           = { 'Andy__M' => 'andy_m129@163.com' }
   s.source           = { :git => 'https://github.com/AndyM129/AMKPromptView.git', :tag => s.version.to_s }
   s.ios.deployment_target = '8.0'
-  s.default_subspec = 'AMKPromptView'
+  s.default_subspec = 'UIViewControllerExtensionMethods'
 
+  s.subspec 'UIViewControllerExtensionMethods' do |extensionMethods|
+      extensionMethods.source_files = 'AMKPromptView/Classes/UIViewControllerExtensionMethods/*.{h,m}'
+      extensionMethods.dependency 'AMKPromptView/AMKPromptView'
+  end
+  
   s.subspec 'AMKPromptView' do |promptView|
-      promptView.source_files = 'AMKPromptView/Classes/PromptView/*.{h,m}'
+      promptView.source_files = 'AMKPromptView/Classes/AMKPromptView/*.{h,m}'
       promptView.dependency 'AMKPromptView/AMKPlaceholderView'
   end
 
   s.subspec 'AMKPlaceholderView' do |placeholderView|
-      placeholderView.source_files = 'AMKPromptView/Classes/PlaceholderView/*.{h,m}'
+      placeholderView.source_files = 'AMKPromptView/Classes/AMKPlaceholderView/*.{h,m}'
       placeholderView.dependency 'Masonry'
   end
 

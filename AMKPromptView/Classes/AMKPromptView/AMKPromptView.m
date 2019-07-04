@@ -30,15 +30,24 @@
     return self;
 }
 
+- (instancetype _Nullable)initWithDelegate:(id<AMKPromptViewDelegate>)delegate {
+    if (self = [self initWithFrame:CGRectZero]) {
+        self.delegate = delegate;
+    }
+    return self;
+}
+
++ (instancetype _Nullable)promptViewWithDelegate:(id<AMKPromptViewDelegate>)delegate {
+    return [[self alloc] initWithDelegate:delegate];
+}
+
 #pragma mark - Layout Subviews
 
 #pragma mark - Properties
 
 - (AMKPlaceholderView *)restrictedView {
     if (!_restrictedView) {
-        _restrictedView = [[AMKPlaceholderView alloc] init];
-        _restrictedView.alpha = 0;
-        [self addSubview:_restrictedView];
+        [self setRestrictedView:[AMKPlaceholderView.alloc init]];
     }
     return _restrictedView;
 }
@@ -51,14 +60,13 @@
         _restrictedView = restrictedView;
         _restrictedView.alpha = 0;
         [self addSubview:_restrictedView];
+        [self addTargetActionToPlaceholderView:_restrictedView];
     }
 }
 
 - (AMKPlaceholderView *)loadingView {
     if (!_loadingView) {
-        _loadingView = [[AMKPlaceholderView alloc] init];
-        _loadingView.alpha = 0;
-        [self addSubview:_loadingView];
+        [self setLoadingView:[AMKPlaceholderView.alloc init]];
     }
     return _loadingView;
 }
@@ -71,14 +79,13 @@
         _loadingView = loadingView;
         _loadingView.alpha = 0;
         [self addSubview:_loadingView];
+        [self addTargetActionToPlaceholderView:_loadingView];
     }
 }
 
 - (AMKPlaceholderView *)emptyView {
     if (!_emptyView) {
-        _emptyView = [[AMKPlaceholderView alloc] init];
-        _emptyView.alpha = 0;
-        [self addSubview:_emptyView];
+        [self setEmptyView:[AMKPlaceholderView.alloc init]];
     }
     return _emptyView;
 }
@@ -91,14 +98,13 @@
         _emptyView = emptyView;
         _emptyView.alpha = 0;
         [self addSubview:_emptyView];
+        [self addTargetActionToPlaceholderView:_emptyView];
     }
 }
 
 - (AMKPlaceholderView *)errorView {
     if (!_errorView) {
-        _errorView = [[AMKPlaceholderView alloc] init];
-        _errorView.alpha = 0;
-        [self addSubview:_errorView];
+        [self setErrorView:[AMKPlaceholderView.alloc init]];
     }
     return _errorView;
 }
@@ -111,6 +117,7 @@
         _errorView = errorView;
         _errorView.alpha = 0;
         [self addSubview:_errorView];
+        [self addTargetActionToPlaceholderView:_errorView];
     }
 }
 
@@ -186,12 +193,45 @@
         [self didChangeValueForKey:@"status"];
     }
 }
+- (void)addTargetActionToPlaceholderView:(AMKPlaceholderView *)placeholderView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(promptView:didClickPlaceholderView:inStatus:)]) {
+        [placeholderView.button addTarget:self action:@selector(didClickPlaceholderViewButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(promptView:didTapPlaceholderView:inStatus:)]) {
+        [placeholderView.tapGestureRecognizer addTarget:self action:@selector(didTapPlaceholderView:)];
+    }
+}
+
+- (void)didClickPlaceholderViewButton:(UIButton *)button {
+    if (!self.delegate || ![self.delegate respondsToSelector:@selector(promptView:didClickPlaceholderView:inStatus:)]) return;
+    
+    AMKPlaceholderView *placeholderView = (AMKPlaceholderView *)[self superviewOfView:button inClass:AMKPlaceholderView.class];
+    [self.delegate promptView:self didClickPlaceholderView:placeholderView inStatus:self.status];
+}
+
+- (void)didTapPlaceholderView:(UITapGestureRecognizer *)tapGestureRecognizer {
+    if (!self.delegate || ![self.delegate respondsToSelector:@selector(promptView:didTapPlaceholderView:inStatus:)]) return;
+    
+    AMKPlaceholderView *placeholderView = (AMKPlaceholderView *)[self superviewOfView:tapGestureRecognizer.view inClass:AMKPlaceholderView.class];
+    [self.delegate promptView:self didTapPlaceholderView:placeholderView inStatus:self.status];
+}
+
 
 #pragma mark - Override
 
 #pragma mark - Delegate
 
 #pragma mark - Helper Methods
+
+/// 获取某视图的 指定类型的父视图
+- (UIView *)superviewOfView:(UIView *)view inClass:(Class)class {
+    UIView *superview = view;
+    do {
+        if ([superview isKindOfClass:class]) return superview;
+        superview = [superview superview];
+    } while (superview != nil);
+    return nil;
+}
 
 @end
 

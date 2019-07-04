@@ -5,5 +5,5 @@ platform :ios, '8.0'
 target 'AMKPromptView_Example' do
   pod 'AMKPromptView', :path => '../'
   pod 'YYCategories'
-
+  pod 'YPNavigationBarTransition'
 end

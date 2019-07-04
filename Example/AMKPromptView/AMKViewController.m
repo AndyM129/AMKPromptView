@@ -7,19 +7,7 @@
 //
 
 #import "AMKViewController.h"
-#import "AMKPlaceholderView+Factory.h"
-#import "AMKPromptView+Factory.h"
-
-typedef NS_ENUM(NSInteger, AMKPromptType) {
-    AMKPromptTypeEmptyViewForNoColorsLoaded = 0,        //!< 显示占位视图到 self.view 上
-    AMKPromptTypeEmptyViewForNoColorsLoadedInWindow,    //!< 显示占位视图到 Window 上
-    AMKPromptTypeLoadingViewWithActivityIndicator,      //!<
-    AMKPromptTypeLoadingViewWithGif,                    //!<
-    AMKPromptTypeCountInSectionOne,                     //!< 计数
-    AMKPromptTypeDemo,                                  //!<
-    AMKPromptType500PX,                                 //!<
-    AMKPromptTypeCountInSectionTwo,                     //!< 计数
-};
+#import "AMKDemoViewController.h"
 
 @interface AMKViewController () <UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic, strong, nullable) UITableView *tableView;
@@ -115,6 +103,7 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
         case AMKPromptType500PX: cell.textLabel.text = @"显示“500PX”的提示视图：loading->empty->hidden"; break;
         default: cell.textLabel.text = nil; break;
     }
+    cell.accessoryType = promptType<=AMKPromptTypeDemo ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
@@ -149,16 +138,11 @@ typedef NS_ENUM(NSInteger, AMKPromptType) {
             [promptView setStatus:promptView.nextStatus animated:YES completion:nil];
             break;
         }
-        case AMKPromptType500PX: {
-            AMKPromptView *promptView = AMKPromptView.promptViewFor500PX;
-            [self.view addSubview:promptView];
-            [promptView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(UIEdgeInsetsZero);
-            }];
-            [promptView setStatus:AMKPromptStatusLoading animated:YES completion:nil];
+        default: {
+            AMKDemoViewController *viewController = [AMKDemoViewController.alloc init];
+            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
-        default: break;
     }
 }
 
