@@ -69,7 +69,7 @@ pod 'AMKPromptView/AMKPromptView'
 
 |   ![](https://raw.githubusercontent.com/AndyM129/ImageHosting/master/images/20190704194109.png)   |   ![](https://raw.githubusercontent.com/AndyM129/ImageHosting/master/images/20190704194353.png)   |   ![](https://raw.githubusercontent.com/AndyM129/ImageHosting/master/images/20190704193616.png)   |
 | ---- | ---- | ---- |
-|   LoadingPlaceholderView   |   GifLoadingPlaceholderView   |   EmptyPlaceholderView   |
+|   <a href="#loadingplaceholderview">LoadingPlaceholderView</a>  |   <a href="#GifLoadingPlaceholderView">GifLoadingPlaceholderView</a>   |   <a href="#EmptyPlaceholderView">EmptyPlaceholderView</a>   |
 
 #### LoadingPlaceholderView
 
