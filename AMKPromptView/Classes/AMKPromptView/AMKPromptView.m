@@ -194,12 +194,8 @@
     }
 }
 - (void)addTargetActionToPlaceholderView:(AMKPlaceholderView *)placeholderView {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(promptView:didClickPlaceholderView:inStatus:)]) {
-        [placeholderView.button addTarget:self action:@selector(didClickPlaceholderViewButton:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(promptView:didTapPlaceholderView:inStatus:)]) {
-        [placeholderView.tapGestureRecognizer addTarget:self action:@selector(didTapPlaceholderView:)];
-    }
+    [placeholderView.button addTarget:self action:@selector(didClickPlaceholderViewButton:) forControlEvents:UIControlEventTouchUpInside];
+    [placeholderView.tapGestureRecognizer addTarget:self action:@selector(didTapPlaceholderView:)];
 }
 
 - (void)didClickPlaceholderViewButton:(UIButton *)button {

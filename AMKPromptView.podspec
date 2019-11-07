@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AMKPromptView'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'AMKPromptView'
   s.description      = <<-DESC
                        The dispatcher with no regist process to split your iOS Project into multiple project.
